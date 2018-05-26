@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage("Preparation") {
             steps {
-                    git 'https://github.com/guilleroldan17/TicTacToe'
+                    git "https://github.com/guilleroldan17/TicTacToe"
                 }
         }
         stage("Test") {
