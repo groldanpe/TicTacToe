@@ -71,8 +71,8 @@ public class BoardTest {
 	}
 	
 	private void cambiarCelda(int cellId, String value) {
-		Cell cell0 = board.getCell(cellId);
-		cell0.value = value;
+		Cell cell = board.getCell(cellId);
+		cell.value = value;
 	}
 	
 }

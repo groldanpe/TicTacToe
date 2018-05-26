@@ -21,7 +21,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class GameTest {
+public class SystemTest {
 
 	private static ChromeDriver driverJugador1; // Nacegador ganador
 	private static ChromeDriver driverJugador2; // Navegador perdedor
