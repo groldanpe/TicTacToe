@@ -47,38 +47,44 @@ public class GameTest {
         public void testGanadorJugadorPrimerTurno() {
             login(driverJugador1, driverWaitJugador1, "Jugador 1");
             login(driverJugador2, driverWaitJugador2, "Jugador 2");
-            pulsarCelda(driverJugador1,driverWaitJugador1,"cell-0","X");
-            pulsarCelda(driverJugador2,driverWaitJugador2,"cell-2","O");
-            pulsarCelda(driverJugador1,driverWaitJugador1,"cell-3","X");
-            pulsarCelda(driverJugador2,driverWaitJugador2,"cell-5","O");
-            pulsarCeldaYGanar(driverJugador1,driverWaitJugador1,"cell-6","X");
+            pulsarCelda(driverJugador1,driverWaitJugador1,"cell-0","X",true);
+            pulsarCelda(driverJugador2,driverWaitJugador2,"cell-2","O",true);
+            pulsarCelda(driverJugador1,driverWaitJugador1,"cell-3","X",true);
+            pulsarCelda(driverJugador2,driverWaitJugador2,"cell-5","O",true);
+            pulsarCelda(driverJugador1,driverWaitJugador1,"cell-6","X",false);
+            comprobarAlerta(driverJugador1,driverWaitJugador1,"Jugador 1 wins! Jugador 2 looses.");
+            comprobarAlerta(driverJugador2,driverWaitJugador2,"Jugador 1 wins! Jugador 2 looses.");
         }
 
         @Test
         public void testGanadorJugadorSegundoTurno() {
             login(driverJugador1, driverWaitJugador1, "Jugador 2");
             login(driverJugador2, driverWaitJugador2, "Jugador 1");
-            pulsarCelda(driverJugador1,driverWaitJugador1,"cell-0","X");
-            pulsarCelda(driverJugador2,driverWaitJugador2,"cell-2","O");
-            pulsarCelda(driverJugador1,driverWaitJugador1,"cell-3","X");
-            pulsarCelda(driverJugador2,driverWaitJugador2,"cell-4","O");
-            pulsarCelda(driverJugador1,driverWaitJugador1,"cell-1","X");
-            pulsarCeldaYGanar(driverJugador2,driverWaitJugador2,"cell-6","O");
+            pulsarCelda(driverJugador1,driverWaitJugador1,"cell-0","X",true);
+            pulsarCelda(driverJugador2,driverWaitJugador2,"cell-2","O",true);
+            pulsarCelda(driverJugador1,driverWaitJugador1,"cell-3","X",true);
+            pulsarCelda(driverJugador2,driverWaitJugador2,"cell-4","O",true);
+            pulsarCelda(driverJugador1,driverWaitJugador1,"cell-1","X",true);
+            pulsarCelda(driverJugador2,driverWaitJugador2,"cell-6","O",false);
+            comprobarAlerta(driverJugador1,driverWaitJugador1,"Jugador 1 wins! Jugador 2 looses.");
+            comprobarAlerta(driverJugador2,driverWaitJugador2,"Jugador 1 wins! Jugador 2 looses.");
         }
 
         @Test
         public void testEmpate() {
             login(driverJugador1, driverWaitJugador1, "Jugador 1");
             login(driverJugador2, driverWaitJugador2, "Jugador 2");
-            pulsarCelda(driverJugador1,driverWaitJugador1,"cell-4","X");
-            pulsarCelda(driverJugador2,driverWaitJugador2,"cell-1","O");
-            pulsarCelda(driverJugador1,driverWaitJugador1,"cell-3","X");
-            pulsarCelda(driverJugador2,driverWaitJugador2,"cell-6","O");
-            pulsarCelda(driverJugador1,driverWaitJugador1,"cell-3","X");
-            pulsarCelda(driverJugador2,driverWaitJugador2,"cell-5","O");
-            pulsarCelda(driverJugador1,driverWaitJugador1,"cell-0","X");
-            pulsarCelda(driverJugador2,driverWaitJugador2,"cell-8","O");
-            pulsarCeldaYGanar(driverJugador2,driverWaitJugador2,"cell-7","X");
+            pulsarCelda(driverJugador1,driverWaitJugador1,"cell-4","X",true);
+            pulsarCelda(driverJugador2,driverWaitJugador2,"cell-1","O",true);
+            pulsarCelda(driverJugador1,driverWaitJugador1,"cell-3","X",true);
+            pulsarCelda(driverJugador2,driverWaitJugador2,"cell-5","O",true);
+            pulsarCelda(driverJugador1,driverWaitJugador1,"cell-2","X",true);
+            pulsarCelda(driverJugador2,driverWaitJugador2,"cell-6","O",true);
+            pulsarCelda(driverJugador1,driverWaitJugador1,"cell-0","X",true);
+            pulsarCelda(driverJugador2,driverWaitJugador2,"cell-8","O",true);
+            pulsarCelda(driverJugador1,driverWaitJugador1,"cell-7","X",false);
+            comprobarAlerta(driverJugador1,driverWaitJugador1,"Draw!");
+            comprobarAlerta(driverJugador2,driverWaitJugador2,"Draw!");
         }
         
 	private void login(ChromeDriver driver, WebDriverWait driverWait, String name) {
@@ -94,37 +100,26 @@ public class GameTest {
 
             Assert.assertNotNull(finalElement);
 	}
+        
+        public void comprobarAlerta(ChromeDriver navegador, WebDriverWait espera, String mensaje){
+            Alert alerta = espera.until(ExpectedConditions.alertIsPresent());
+            assertThat(alerta.getText()).isEqualTo(mensaje);
+        }
 	
-	public void pulsarCeldaYGanar(ChromeDriver navegador, WebDriverWait espera, String celda, String valor) {
-            // Pulsar celda y recoger alerta ganadora
-            Alert alerta_gan = pulsarCeldaGanadora(navegador,espera,celda,valor);
-            // Recoger alerta perdedora
-            Alert alerta_per = espera.until(ExpectedConditions.alertIsPresent());
-            
-            // Comparar las alertas con el resultado esperado
-            String textoEsperado = "Jugador 1 wins! Jugador 2 looses.";
-            assertThat(textoEsperado).isEqualTo(alerta_gan.getText())
-                                    .isEqualTo(alerta_per.getText());
-            
-            // Cerrar navegadores
+        public boolean pulsarCelda(ChromeDriver navegador, WebDriverWait espera, String celda, String valor, boolean esperarCelda){
+            WebElement celdaElement = navegador.findElement(By.id(celda));
+            celdaElement.click();
+            if (esperarCelda)
+                return espera.until(ExpectedConditions.textToBe(By.id(celda), valor));
+            else
+                return true;
+        }
+        
+        @After
+        public void cerrarNavegadores() {
             driverJugador1.close();
             driverJugador2.close();
 	}
-        
-        public boolean pulsarCelda(ChromeDriver navegador, WebDriverWait espera, String celda, String valor){
-            WebElement celdaElement = navegador.findElement(By.id(celda));
-            celdaElement.click();
-
-            return espera.until(ExpectedConditions.textToBe(By.id(celda), valor));
-        }
-        
-        public Alert pulsarCeldaGanadora(ChromeDriver navegador, WebDriverWait espera, String celda, String valor){
-            WebElement celdaElement = navegador.findElement(By.id(celda));
-            celdaElement.click();
-            
-            Alert alert = espera.until(ExpectedConditions.alertIsPresent());
-            return alert;
-        }
 
 	@AfterClass
 	public static void terminarTest() {
