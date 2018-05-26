@@ -1,6 +1,5 @@
 package es.codeurjc.ais.tictactoe;
 
-import static org.junit.Assert.assertEquals;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.After;
@@ -31,7 +30,6 @@ public class SystemTest {
 	@BeforeClass
 	public static void setUpClass() {
             ChromeDriverManager.getInstance().setup();
-
             WebApp.start();
 	}
         
