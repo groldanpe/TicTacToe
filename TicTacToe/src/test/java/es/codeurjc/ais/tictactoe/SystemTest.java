@@ -56,16 +56,16 @@ public class SystemTest {
 
         @Test
         public void testGanadorJugadorSegundoTurno() {
-            login(driverJugador1, driverWaitJugador1, "Jugador 2");
-            login(driverJugador2, driverWaitJugador2, "Jugador 1");
+            login(driverJugador1, driverWaitJugador1, "Jugador 1");
+            login(driverJugador2, driverWaitJugador2, "Jugador 2");
             pulsarCelda(driverJugador1,driverWaitJugador1,"cell-0","X",true);
             pulsarCelda(driverJugador2,driverWaitJugador2,"cell-2","O",true);
             pulsarCelda(driverJugador1,driverWaitJugador1,"cell-3","X",true);
             pulsarCelda(driverJugador2,driverWaitJugador2,"cell-4","O",true);
             pulsarCelda(driverJugador1,driverWaitJugador1,"cell-1","X",true);
             pulsarCelda(driverJugador2,driverWaitJugador2,"cell-6","O",false);
-            comprobarAlerta(driverJugador1,driverWaitJugador1,"Jugador 1 wins! Jugador 2 looses.");
-            comprobarAlerta(driverJugador2,driverWaitJugador2,"Jugador 1 wins! Jugador 2 looses.");
+            comprobarAlerta(driverJugador1,driverWaitJugador1,"Jugador 2 wins! Jugador 1 looses.");
+            comprobarAlerta(driverJugador2,driverWaitJugador2,"Jugador 2 wins! Jugador 1 looses.");
         }
 
         @Test
